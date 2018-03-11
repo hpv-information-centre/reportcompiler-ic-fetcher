@@ -1,0 +1,10 @@
+sample_reports
+__pycache__/
+*.py[cod]
+.vscode
+.pylintrc
+doc/_build
+doc/_static
+doc/_templates
+doc/reportcompiler
+main.py
