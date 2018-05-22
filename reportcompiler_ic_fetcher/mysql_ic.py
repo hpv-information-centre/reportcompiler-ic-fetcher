@@ -106,7 +106,9 @@ class MySQLICFetcher(MySQLFetcher):
             return df[ref_columns]
 
         def build_column_ref_df(df):
-            return df[ref_columns + ['applyto_variable']]
+            ret_df = df[['applyto_variable'] + ref_columns]
+            ret_df.columns = ['column'] + ref_columns
+            return ret_df
 
         def build_row_ref_df(df):
             row_refs = df[['strata_variable', 'strata_value'] +
