@@ -113,7 +113,7 @@ class MySQLICFetcher(MySQLFetcher):
         def build_row_ref_df(df):
             row_refs = df[['strata_variable', 'strata_value'] +
                           ref_columns]
-            row_refs['row'] = row_refs.index
+            row_refs.assign(row=row_refs.index)
             df_rows = pd.DataFrame(columns=['row'] + ref_columns)
             for _, row_ref in row_refs.iterrows():
                 var = row_ref['strata_variable']
@@ -149,7 +149,7 @@ class MySQLICFetcher(MySQLFetcher):
             cell_refs = df[['strata_variable', 'strata_value',
                             'applyto_variable'] +
                            ref_columns]
-            cell_refs['row'] = cell_refs.index
+            cell_refs.assign(row=cell_refs.index)
             df_cell = pd.DataFrame(columns=['row', 'column'] + ref_columns)
             for _, cell_ref in cell_refs.iterrows():
                 var = cell_ref['strata_variable']
