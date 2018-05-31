@@ -26,9 +26,9 @@ class MySQLICFetcher(MySQLFetcher):
     """
     name = 'mysql_ic'
 
-    def fetch(self, doc_var, fetcher_info, metadata):
+    def fetch(self, doc_param, fetcher_info, metadata):
         self.mysql_fetcher = super(MySQLICFetcher, self)
-        self.original_data = self.mysql_fetcher.fetch(doc_var,
+        self.original_data = self.mysql_fetcher.fetch(doc_param,
                                                       fetcher_info,
                                                       metadata)
         if fetcher_info.get('missing_string'):
@@ -46,28 +46,28 @@ class MySQLICFetcher(MySQLFetcher):
 
         self.fields_original = fetcher_info['fields']
         fetcher_info['fields'] = '*'
-        self.data = self.mysql_fetcher.fetch(doc_var, fetcher_info, metadata)
+        self.data = self.mysql_fetcher.fetch(doc_param, fetcher_info, metadata)
 
-        refs_doc_var = doc_var
-        refs_doc_var.update(
+        refs_doc_param = doc_param
+        refs_doc_param.update(
             {
                 'data_table': fetcher_info['table'],
                 'empty_iso': '-99',
             })
 
-        sources = self._get_sources(refs_doc_var, fetcher_info, metadata)
+        sources = self._get_sources(refs_doc_param, fetcher_info, metadata)
         source_dict = self._split_ref_dataframe(sources, ['text'])
 
-        notes = self._get_notes(refs_doc_var, fetcher_info, metadata)
+        notes = self._get_notes(refs_doc_param, fetcher_info, metadata)
         note_dict = self._split_ref_dataframe(notes, ['text'])
 
-        methods = self._get_methods(refs_doc_var, fetcher_info, metadata)
+        methods = self._get_methods(refs_doc_param, fetcher_info, metadata)
         method_dict = self._split_ref_dataframe(methods, ['text'])
 
-        years = self._get_years(refs_doc_var, fetcher_info, metadata)
+        years = self._get_years(refs_doc_param, fetcher_info, metadata)
         year_dict = self._split_ref_dataframe(years, ['text'])
 
-        date = self._get_date(refs_doc_var, fetcher_info, metadata)
+        date = self._get_date(refs_doc_param, fetcher_info, metadata)
 
         fetcher_info['fields'] = self.fields_original
 
@@ -194,7 +194,7 @@ class MySQLICFetcher(MySQLFetcher):
     # TODO: fields param should be standardized in all tables
     # (notes, sources, ...)
     def _get_refs_fetcher(self,
-                          refs_doc_var,
+                          refs_doc_param,
                           fetcher_info,
                           metadata,
                           table,
@@ -218,38 +218,38 @@ class MySQLICFetcher(MySQLFetcher):
             fetcher['credentials_file'] = fetcher_info['credentials_file']
         if fetcher_info.get('credentials'):
             fetcher['credentials'] = fetcher_info['credentials']
-        return self.mysql_fetcher.fetch(refs_doc_var, fetcher, metadata)
+        return self.mysql_fetcher.fetch(refs_doc_param, fetcher, metadata)
 
-    def _get_sources(self, refs_doc_var, fetcher_info, metadata):
-        return self._get_refs_fetcher(refs_doc_var,
+    def _get_sources(self, refs_doc_param, fetcher_info, metadata):
+        return self._get_refs_fetcher(refs_doc_param,
                                       fetcher_info,
                                       metadata,
                                       'view_relatedinf_source_by',
                                       {'full_reference': 'text'})
 
-    def _get_notes(self, refs_doc_var, fetcher_info, metadata):
-        return self._get_refs_fetcher(refs_doc_var,
+    def _get_notes(self, refs_doc_param, fetcher_info, metadata):
+        return self._get_refs_fetcher(refs_doc_param,
                                       fetcher_info,
                                       metadata,
                                       'view_relatedinf_note_by',
                                       {'valueNote': 'text'})
 
-    def _get_methods(self, refs_doc_var, fetcher_info, metadata):
-        return self._get_refs_fetcher(refs_doc_var,
+    def _get_methods(self, refs_doc_param, fetcher_info, metadata):
+        return self._get_refs_fetcher(refs_doc_param,
                                       fetcher_info,
                                       metadata,
                                       'view_relatedinf_method_by',
                                       {'valueMethod': 'text'})
 
-    def _get_years(self, refs_doc_var, fetcher_info, metadata):
-        return self._get_refs_fetcher(refs_doc_var,
+    def _get_years(self, refs_doc_param, fetcher_info, metadata):
+        return self._get_refs_fetcher(refs_doc_param,
                                       fetcher_info,
                                       metadata,
                                       'view_relatedinf_year_by',
                                       {'year': 'text'})
 
-    def _get_date(self, refs_doc_var, fetcher_info, metadata):
-        return self._get_refs_fetcher(refs_doc_var,
+    def _get_date(self, refs_doc_param, fetcher_info, metadata):
+        return self._get_refs_fetcher(refs_doc_param,
                                       fetcher_info,
                                       metadata,
                                       'view_relatedinf_date_by',
