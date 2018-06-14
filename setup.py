@@ -1,6 +1,10 @@
 """ Module for installing module as pip package """
 import os
 from setuptools import find_packages, setup
+import sys
+
+sys.path.insert(0, os.path.abspath(__file__))
+from reportcompiler_ic_fetcher import __version__
 
 with open(os.path.join(os.path.dirname(__file__), 'README.rst')) as readme:
     README = readme.read()
@@ -11,7 +15,7 @@ os.chdir(
 
 setup(
     name='reportcompiler-ic-fetcher',
-    version='0.3.0',
+    version=__version__,
     packages=find_packages('.'),
     include_package_data=True,
     license='MIT License',
@@ -35,8 +39,13 @@ setup(
         'Programming Language :: Python :: 3.5',
     ],
     install_requires=[
-        'reportcompiler',
+        # 'reportcompiler',
         'pymysql',
+        'sphinx-autoapi',
+        'setuptools',  # 34.3.2
+        'sphinx',
+        'autoapi',
+        'sphinxcontrib-websupport'
     ],
     entry_points={
         'reportcompiler.data_fetchers': [

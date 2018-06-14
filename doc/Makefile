@@ -2,7 +2,7 @@
 #
 
 # You can set these variables from the command line.
-SPHINXOPTS    = -D graphviz_dot="C:\Program Files (x86)\Graphviz2.38\bin\dot.exe"
+# SPHINXOPTS    = -D graphviz_dot="C:\Program Files (x86)\Graphviz2.38\bin\dot.exe"
 SPHINXBUILD   = sphinx-build
 PAPER         =
 BUILDDIR      = _build
