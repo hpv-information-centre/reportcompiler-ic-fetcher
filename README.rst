@@ -16,7 +16,7 @@ This project is being developed by the ICO/IARC Information Centre on HPV and Ca
 .. |docs| image:: https://readthedocs.org/projects/reportcompiler-ic-fetcher/badge/?version=develop
     :alt: Documentation Status
     :scale: 100%
-    :target: https://reportcompiler-ic-fetcher.readthedocs.io/en/doc/?badge=develop
+    :target: https://reportcompiler-ic-fetcher.readthedocs.io/en/develop/?badge=develop
 
 Features
 ============
