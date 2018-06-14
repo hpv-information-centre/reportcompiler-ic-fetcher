@@ -1,6 +1,8 @@
 Report Compiler HPV Information Centre data fetcher
 ###################################################
 
+|docs|
+
 The Report Compiler HPV Information Centre data fetcher is a plugin for the Report Compiler
 library that extends the MySQL fetcher to support the inclusion of sources, notes and other info
 related to the fetched data. The plugin expects a particular database structure 
@@ -13,6 +15,11 @@ and will be used in our report generation tasks.
    :height: 50px
    :align: center
    :target: http://www.hpvcentre.net
+
+.. |docs| image:: https://readthedocs.org/projects/reportcompiler-ic-fetcher/badge/?version=develop
+    :alt: Documentation Status
+    :scale: 100%
+    :target: https://reportcompiler-ic-fetcher.readthedocs.io/en/doc/?badge=develop
 
 Features
 ============

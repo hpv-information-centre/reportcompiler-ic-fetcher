@@ -1,0 +1,5 @@
+pymysql
+setuptools
+sphinx
+autoapi
+sphinxcontrib-websupport

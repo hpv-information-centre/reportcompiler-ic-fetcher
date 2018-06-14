@@ -4,20 +4,18 @@
    contain the root `toctree` directive.
 
 Welcome to Report Compiler IC Fetcher's documentation!
-===========================================
-
-Contents:
+======================================================
 
 .. toctree::
+   :maxdepth: 2
 
-   reportcompiler_ic_fetcher/reportcompiler_ic_fetcher
+   getting_started.rst
+   references.rst
+   ic_fetcher.rst
 
-
-
-Indices and tables
-==================
+.. toctree::
+   :maxdepth: 1
+   
+   module_contents.rst
 
 * :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-

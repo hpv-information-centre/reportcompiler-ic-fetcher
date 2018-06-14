@@ -18,6 +18,9 @@ from reportcompiler.plugins.data_fetchers.utils.sql_builder \
 from odictliteral import odict
 
 
+__all__ = ['MySQLICFetcher', ]
+
+
 class MySQLICFetcher(MySQLFetcher):
     """
     Data fetcher for MySQL databases using the HPV Information Center data
@@ -259,5 +262,3 @@ class MySQLICFetcher(MySQLFetcher):
                                         'dateDelivery': 'date_delivery',
                                         'datePublicacio': 'date_publication',
                                       })
-
-__all__ = ['MySQLICFetcher', ]
