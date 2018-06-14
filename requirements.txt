@@ -1,5 +1,7 @@
+git+git://github.com/hpv-information-centre/reportcompiler
 pymysql
 setuptools
 sphinx
+sphinx-autoapi
 autoapi
 sphinxcontrib-websupport
