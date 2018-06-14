@@ -12,6 +12,7 @@ Welcome to Report Compiler IC Fetcher's documentation!
    getting_started.rst
    references.rst
    ic_fetcher.rst
+   parameters.rst
 
 .. toctree::
    :maxdepth: 1
