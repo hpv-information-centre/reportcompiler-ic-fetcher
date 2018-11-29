@@ -16,7 +16,11 @@ Reference types
 
 * **Years**: The year(s) when an indicator estimate is valid; e.g. *2000-2006*.
 
-* **Dates**: TODO
+* **Dates**: The dates associated with the data:
+   * **Access date**: Date on which the data was accessed, in case of external data.
+   * **Closing date**: Date on which the data is considered valid.
+   * **Publication date**: Date on which the data has been published.
+   * **Delivery date**: Date on which the data has been delivered to the HPV Information Centre.
 
 Reference locations
 ---------------------
@@ -29,8 +33,3 @@ Since the data used by this fetcher is relational, there are several places with
 * **Cell**: It applies to a particular cell within a table. An index identifying the referenced row, as well as a column name, are needed to identify the referenced cell.
 
 Furthermore, for convenience a ISO3 code is used internally to further filter the result. From this data fetcher's point of view, though, this filtering is transparent to the user and will be properly classified as one of the above locations.
-
-Dates
------
-
-TODO

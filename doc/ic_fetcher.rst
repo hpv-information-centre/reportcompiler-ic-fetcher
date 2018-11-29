@@ -16,7 +16,7 @@ This data fetcher is an extension of (and is subclassed from) the MySQL fetcher.
 * **notes**: a dictionary with the note references appearing in the dataframe.
 * **methods**: a dictionary with the method references appearing in the dataframe.
 * **years**: a dictionary with the year references appearing in the dataframe.
-* **date**: TODO
+* **date**: a dictionary with four date keys: **date_accessed**, **date_closing**, **date_publication** and **date_delivery**.
 
 The *sources*, *notes*, *methods* and *years* dictionaries all follow the same structure. Each one contains the references grouped by location type (see :ref:`references`). Specifically:
 
