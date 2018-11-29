@@ -17,10 +17,10 @@ Reference types
 * **Years**: The year(s) when an indicator estimate is valid; e.g. *2000-2006*.
 
 * **Dates**: The dates associated with the data:
-   * **Access date**: Date on which the data was accessed, in case of external data.
-   * **Closing date**: Date on which the data is considered valid.
-   * **Publication date**: Date on which the data has been published.
-   * **Delivery date**: Date on which the data has been delivered to the HPV Information Centre.
+   * **Access**: Date on which the data was accessed, only applies on external data.
+   * **Closing**: Date on which the data is considered valid, usually the original publication date for external data or the validation date for internal data.
+   * **Publication**: Date on which the data has been first published.
+   * **Delivery**: Date on which the data has been delivered to the HPV Information Centre, generally used for internal use only.
 
 Reference locations
 ---------------------
