@@ -159,20 +159,21 @@ class MySQLICFetcher(MySQLFetcher):
                 try:
                     self.data[var]
                 except KeyError:
-                    pass
+                    var = None
 
-                # Try again with the original fetcher mapping
-                try:
-                    var = [k
-                           for k, v in self.fields_original.items()
-                           if v == var][0]
-                    self.data[var]
-                except KeyError:
-                    raise ValueError(
-                        "Field '{}' doesn't exist in data, please check "
-                        "that it appears in the data fetcher info.".format(
-                            var)
-                    )
+                if var is None:
+                    # Try again with the original fetcher mapping
+                    try:
+                        var = [k
+                               for k, v in self.fields_original.items()
+                               if v == var][0]
+                        self.data[var]
+                    except KeyError:
+                        raise ValueError(
+                            "Field '{}' doesn't exist in data, please check "
+                            "that it appears in the data fetcher info.".format(
+                                var)
+                        )
                 if self.data[var].dtype == 'object':
                     val = str(cell_ref['strata_value'])
                 else:
