@@ -70,7 +70,13 @@ class MySQLICFetcher(MySQLFetcher):
         years = self._get_years(refs_doc_param, fetcher_info, metadata)
         year_dict = self._split_ref_dataframe(years, ['text'])
 
-        date = self._get_date(refs_doc_param, fetcher_info, metadata)
+        date = self._get_date(refs_doc_param, fetcher_info, metadata).loc[0,:]
+        date = {
+            'date_accessed': date['date_accessed'].strftime('%Y-%m-%d') if date['date_accessed'] else None,
+            'date_closing': date['date_closing'].strftime('%Y-%m-%d') if date['date_closing'] else None,
+            'date_publication': date['date_publication'].strftime('%Y-%m-%d') if date['date_publication'] else None,
+            'date_delivery': date['date_delivery'].strftime('%Y-%m-%d') if date['date_delivery'] else None
+        }
 
         fetcher_info['fields'] = self.fields_original
 
@@ -159,20 +165,21 @@ class MySQLICFetcher(MySQLFetcher):
                 try:
                     self.data[var]
                 except KeyError:
-                    pass
+                    var = None
 
-                # Try again with the original fetcher mapping
-                try:
-                    var = [k
-                           for k, v in self.fields_original.items()
-                           if v == var][0]
-                    self.data[var]
-                except KeyError:
-                    raise ValueError(
-                        "Field '{}' doesn't exist in data, please check "
-                        "that it appears in the data fetcher info.".format(
-                            var)
-                    )
+                if var is None:
+                    # Try again with the original fetcher mapping
+                    try:
+                        var = [k
+                               for k, v in self.fields_original.items()
+                               if v == var][0]
+                        self.data[var]
+                    except KeyError:
+                        raise ValueError(
+                            "Field '{}' doesn't exist in data, please check "
+                            "that it appears in the data fetcher info.".format(
+                                var)
+                        )
                 if self.data[var].dtype == 'object':
                     val = str(cell_ref['strata_value'])
                 else:

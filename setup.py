@@ -39,13 +39,12 @@ setup(
         'Programming Language :: Python :: 3.5',
     ],
     install_requires=[
-        # 'reportcompiler',
-        'pymysql',
-        'sphinx-autoapi',
-        'setuptools',  # 34.3.2
-        'sphinx',
-        'autoapi',
-        'sphinxcontrib-websupport'
+        'pymysql>=0.8.1'
+        'sphinx-autoapi>=0.5.0',
+        'setuptools>=39.2.0',
+        'sphinx>=1.7.5',
+        'autoapi>=1.3.1',
+        'sphinxcontrib-websupport>=1.0.1',
     ],
     entry_points={
         'reportcompiler.data_fetchers': [
