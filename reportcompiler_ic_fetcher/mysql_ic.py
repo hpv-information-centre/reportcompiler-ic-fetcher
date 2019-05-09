@@ -70,12 +70,16 @@ class MySQLICFetcher(MySQLFetcher):
         years = self._get_years(refs_doc_param, fetcher_info, metadata)
         year_dict = self._split_ref_dataframe(years, ['text'])
 
-        date = self._get_date(refs_doc_param, fetcher_info, metadata).loc[0,:]
+        date = self._get_date(refs_doc_param, fetcher_info, metadata).loc[0, :]
         date = {
-            'date_accessed': date['date_accessed'].strftime('%Y-%m-%d') if date['date_accessed'] else None,
-            'date_closing': date['date_closing'].strftime('%Y-%m-%d') if date['date_closing'] else None,
-            'date_publication': date['date_publication'].strftime('%Y-%m-%d') if date['date_publication'] else None,
-            'date_delivery': date['date_delivery'].strftime('%Y-%m-%d') if date['date_delivery'] else None
+            'date_accessed': date['date_accessed'].strftime('%Y-%m-%d')
+            if date['date_accessed'] else None,
+            'date_closing': date['date_closing'].strftime('%Y-%m-%d')
+            if date['date_closing'] else None,
+            'date_publication': date['date_publication'].strftime('%Y-%m-%d')
+            if date['date_publication'] else None,
+            'date_delivery': date['date_delivery'].strftime('%Y-%m-%d')
+            if date['date_delivery'] else None
         }
 
         fetcher_info['fields'] = self.fields_original
@@ -99,15 +103,21 @@ class MySQLICFetcher(MySQLFetcher):
         cell_refs = df.loc[(df['strata_variable'].apply(str) != '-9999') &
                            (df['applyto_variable'].apply(str) != '-9999')]
         self.ref_counter = 0
+
+        global_refs = self._build_refs_dataframe(global_refs,
+                                                 ref_columns, 'global')
+        row_refs = self._build_refs_dataframe(row_refs,
+                                              ref_columns, 'row')
+        column_refs = self._build_refs_dataframe(column_refs,
+                                                 ref_columns, 'column')
+        cell_refs = self._build_refs_dataframe(cell_refs,
+                                               ref_columns, 'cell')
+
         return {
-            'global': self._build_refs_dataframe(global_refs,
-                                                 ref_columns, 'global'),
-            'row': self._build_refs_dataframe(row_refs,
-                                              ref_columns, 'row'),
-            'column': self._build_refs_dataframe(column_refs,
-                                                 ref_columns, 'column'),
-            'cell': self._build_refs_dataframe(cell_refs,
-                                               ref_columns, 'cell'),
+            'global': global_refs,
+            'row': row_refs,
+            'column': column_refs,
+            'cell': cell_refs,
         }
 
     def _build_refs_dataframe(self, df, ref_columns, type):
