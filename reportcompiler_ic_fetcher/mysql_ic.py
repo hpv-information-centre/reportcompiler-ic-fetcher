@@ -187,7 +187,7 @@ class MySQLICFetcher(MySQLFetcher):
                 matching_indices = self.data[self.data[var] == val].index
                 ref_df = pd.DataFrame({'row': matching_indices},
                                       columns=['row', 'column'] + ref_columns)
-                ref_df['column'] = cell_ref['applyto_variable'][0]
+                ref_df['column'] = cell_ref[['applyto_variable']][0]
                 ref_df[ref_columns] = cell_ref[ref_columns][0]
                 df_cell = df_cell.append(ref_df)
             return df_cell
