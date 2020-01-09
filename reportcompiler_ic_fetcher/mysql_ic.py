@@ -147,7 +147,7 @@ class MySQLICFetcher(MySQLFetcher):
                            for k, v in self.fields_original.items()
                            if v == var][0]
                     self.data[var]
-                except KeyError:
+                except IndexError:
                     raise ValueError(
                         "Field '{}' doesn't exist in data, please check "
                         "that it appears in the data fetcher info.".format(
