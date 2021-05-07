@@ -5,6 +5,7 @@ import pandas as pd
 import os
 import json
 import logging
+from collections import OrderedDict
 from pprint import pprint
 from threading import Lock
 from pymysql.err import OperationalError
@@ -147,7 +148,7 @@ class MySQLICFetcher(MySQLFetcher):
                            for k, v in self.fields_original.items()
                            if v == var][0]
                     self.data[var]
-                except IndexError:
+                except KeyError:
                     raise ValueError(
                         "Field '{}' doesn't exist in data, please check "
                         "that it appears in the data fetcher info.".format(
@@ -214,31 +215,44 @@ class MySQLICFetcher(MySQLFetcher):
     # TODO: fields param should be standardized in all tables
     # (notes, sources, ...)
     def _get_refs_fetcher(self,
-                          refs_doc_param,
-                          fetcher_info,
-                          metadata,
-                          table,
-                          fields):
-        fetcher = {
+        refs_doc_param,
+        fetcher_info,
+        metadata,
+        table,
+        fields):
+        if table == 'view_relatedinf_date_by':
+            # If building dates, only getting global (iso=-99)
+            isos = [refs_doc_param['empty_iso']]
+        elif 'dataquery_isos' not in refs_doc_param:
+            isos = [refs_doc_param['iso'],refs_doc_param['empty_iso']]
+        else:
+            isos = refs_doc_param['dataquery_isos'].split(",")
+            isos = isos + [refs_doc_param['empty_iso']]
+        refs = pd.DataFrame()
+        for iso in isos:
+            iso_doc_param = OrderedDict(refs_doc_param)
+            iso_doc_param['iso'] = iso
+            fetcher = {
             'type': 'mysql',
             'table': table,
             'fields': {
-                'iso3Code': 'iso',
-                'strata_variable': 'strata_variable',
-                'strata_value': 'strata_value',
-                'applyto_variable': 'applyto_variable',
+            'iso3Code': 'iso',
+            'strata_variable': 'strata_variable',
+            'strata_value': 'strata_value',
+            'applyto_variable': 'applyto_variable',
             },
             'condition': {
-                'data_tbl': 'data_table',
-                'iso3Code': ['iso', 'empty_iso']
+            'data_tbl': 'data_table',
+            'iso3Code': 'iso'
             }
-        }
-        fetcher['fields'].update(fields)
-        if fetcher_info.get('credentials_file'):
-            fetcher['credentials_file'] = fetcher_info['credentials_file']
-        if fetcher_info.get('credentials'):
-            fetcher['credentials'] = fetcher_info['credentials']
-        return self.mysql_fetcher.fetch(refs_doc_param, fetcher, metadata)
+            }
+            fetcher['fields'].update(fields)
+            if fetcher_info.get('credentials_file'):
+                fetcher['credentials_file'] = fetcher_info['credentials_file']
+            if fetcher_info.get('credentials'):
+                fetcher['credentials'] = fetcher_info['credentials']
+            refs = refs.append(self.mysql_fetcher.fetch(iso_doc_param, fetcher, metadata))
+        return refs
 
     def _get_sources(self, refs_doc_param, fetcher_info, metadata):
         return self._get_refs_fetcher(refs_doc_param,
